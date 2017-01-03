@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+apply plugin: 'jetty'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'gs-securing-web'
+    version = '0.1.0'
+}
+
+// JDK 7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
+    compile 'javax.servlet:jstl:1.2'
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.security:spring-security-web:4.2.1.RELEASE'
+    compile 'org.springframework.security:spring-security-config:4.2.1.RELEASE'
+    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+}
+
+// Embeded Jetty for testing
+jettyRun {
+    contextPath = "spring4"
+    httpPort = 8080
+}
+
+jettyRunWar {
+    contextPath = "spring4"
+    httpPort = 8080
+}
+
+//For Eclipse IDE only
+eclipse {
+
+    wtp {
+        component {
+
+            //define context path, default to project folder name
+            contextPath = 'spring4'
+
+        }
+
+    }
+}
+
